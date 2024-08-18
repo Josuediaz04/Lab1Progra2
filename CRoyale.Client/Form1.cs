@@ -8,16 +8,64 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CRoyale.Domain;
+using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace CRoyale.Client
 {
 	public partial class Form1 : Form
 	{
-		public Form1()
+        private Point offset;
+        private Player jugador;
+        private Player rival;
+        public Form1()
 		{
 			InitializeComponent();
-		}
+            this.FormBorderStyle = FormBorderStyle.None;
+            this.StartPosition = FormStartPosition.CenterScreen;
+            jugador = new Player();
+            jugador.Name = "Juan";
+            jugador.Maso = new List<Card> {
+             new Card{ CardId=1,Name="", HP=20, Damage=3  },
+              new Card{ CardId=2,Name="", HP=20, Damage=3  }
+            };
 
+            rival = new Player();
+            rival.Name = "Marco";
+            rival.Maso = new List<Card> {
+             new Card{ CardId=1,Name="", HP=20, Damage=3  },
+              new Card{ CardId=2,Name="", HP=20, Damage=3  }
+            };
+
+            toolCard1Rival.SetToolTip(carta1Contrario, "Soy la carta rival ");
+        }
+        private int[] ObtenerMazo() {
+            int[] cartasArray = { 2, 4, 1, 3 };
+            var cartasList = cartasArray.ToList();
+            Random random = new Random();
+            var randomizedList = cartasList.OrderBy(x => random.Next()).ToList();
+            randomizedList.CopyTo(cartasArray);
+            return cartasArray;
+        }
+        private void IniciarCartaPC() {
+            int[] cartas = ObtenerMazo();
+            Random random=new Random();
+            int carta = random.Next(0, 3);
+            AsignarImagenesCartas(carta1Contrario, cartas[carta]);
+           
+        }
+        private void IniciarCartas() {
+            int[] cartas = ObtenerMazo();
+            AsignarImagenesCartas(carta1, cartas[0]);
+            AsignarImagenesCartas(carta2, cartas[1]);
+            AsignarImagenesCartas(carta3, cartas[2]);
+            AsignarImagenesCartas(carta4, cartas[3]);
+        }
+        private void AsignarImagenesCartas(PictureBox carta, int num) {
+            carta.Image = Image.FromFile(string.Format(@"images/{0}.jpeg", num));
+            carta.SizeMode = PictureBoxSizeMode.StretchImage;
+            carta.AllowDrop = true;
+           // toolTip1.SetToolTip(carta, "Soy la carta "+num);
+        }
 		private void TestCard() {
             Card player1 = new Card();
             player1.Name = "Golem";
@@ -68,7 +116,91 @@ namespace CRoyale.Client
 		private void Form1_Load(object sender, EventArgs e)
 		{
             //TestCard();
-
+            IniciarCartas();
+            IniciarCartaPC();
         }
-	}
+
+        private void btnCerrar_Click(object sender, EventArgs e)
+        {
+            this.Close();
+        }
+
+        private void carta1_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                offset = new Point(e.X, e.Y);
+            }
+        }
+
+        private void carta1_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Point newLocation = this.PointToClient(Control.MousePosition);
+                newLocation.Offset(-offset.X, -offset.Y);
+                carta1.Location = newLocation;
+            }
+        }
+
+        private void carta2_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                offset = new Point(e.X, e.Y);
+            }
+        }
+
+        private void carta2_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Point newLocation = this.PointToClient(Control.MousePosition);
+                newLocation.Offset(-offset.X, -offset.Y);
+                carta2.Location = newLocation;
+            }
+        }
+
+        private void carta3_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                offset = new Point(e.X, e.Y);
+            }
+        }
+
+        private void carta3_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Point newLocation = this.PointToClient(Control.MousePosition);
+                newLocation.Offset(-offset.X, -offset.Y);
+                carta3.Location = newLocation;
+            }
+        }
+
+        private void carta4_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                offset = new Point(e.X, e.Y);
+            }
+        }
+
+        private void carta4_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Point newLocation = this.PointToClient(Control.MousePosition);
+                newLocation.Offset(-offset.X, -offset.Y);
+                carta4.Location = newLocation;
+            }
+        }
+        int ataque = 0;
+        private void carta1Contrario_Click(object sender, EventArgs e)
+        {
+            ataque++;
+            toolCard1Rival.SetToolTip(carta1Contrario, "Estoy en el ataque numero "+ataque);
+        }
+    }
 }
