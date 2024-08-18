@@ -88,6 +88,7 @@
   <ItemGroup />
   <ItemGroup>
     <Content Include="Images\campobatalla.jpg" />
+    <Content Include="Images\CampoCartas.jpg" />
     <Content Include="Images\pekka.jpeg" />
     <Content Include="Images\magoHielo.jpeg" />
     <Content Include="Images\Bruja.jpeg" />
