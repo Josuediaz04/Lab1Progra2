@@ -26,7 +26,24 @@ namespace CRoyale.Domain
 		{
 			playerWin.XP += _xp;
 		}
+        public void MoveCards(Player player)
+        {           
+            Random random = new Random();
+            var randomizedList = player.Mazo.OrderBy(x => random.Next()).ToList();
+            player.Mazo= randomizedList;
+        }
+        public Player GetPlayer(string name)
+		{
+			Player player = new Player();
+			player.Name = name;
+			player.Mazo = new List<Card> {
+			 new Card{ CardId=1,Name="Bruja", HP=20, Damage=3  },
+			  new Card{ CardId=2,Name="Pekka", HP=20, Damage=3  },
+			  new Card{ CardId=3,Name="Verdugo", HP=20, Damage=4},
+			  new Card{ CardId=4,Name="Mago", HP = 20, Damage=3}
+			};
 
-
+			return player;
+		}
 	}
 }

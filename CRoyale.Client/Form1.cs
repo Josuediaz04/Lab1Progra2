@@ -17,49 +17,61 @@ namespace CRoyale.Client
         private Point offset;
         private Player jugador;
         private Player rival;
+        private ControlPlay controlPlay;
+        private List<PictureBox> spaceCardsImages;
         public Form1()
 		{
 			InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
-            jugador = new Player();
-            jugador.Name = "Juan";
-            jugador.Maso = new List<Card> {
-             new Card{ CardId=1,Name="Bruja", HP=20, Damage=3  },
-              new Card{ CardId=2,Name="Pekka", HP=20, Damage=3  },
-              new Card{ CardId=3,Name="Verdugo", HP=20, Damage=4},
-              new Card{ CardId=4,Name="Mago", HP = 20, Damage=3}
-            };
+            controlPlay = new ControlPlay();
+            jugador = controlPlay.GetPlayer("Juan");
+            rival = controlPlay.GetPlayer("Marco");  
+            controlPlay.MoveCards(jugador);
+            controlPlay.MoveCards(rival);
 
-            
-
-            rival = new Player();
-            rival.Name = "Marco";
-            rival.Maso = new List<Card> {
-             new Card{ CardId=1,Name="Bruja", HP=20, Damage=3  },
-              new Card{ CardId=2,Name="Pekka", HP=20, Damage=3  },
-			  new Card{ CardId=3,Name="Verdugo", HP=20, Damage=4},
-			  new Card{ CardId=4,Name="Mago", HP = 20, Damage=3}
-			};
-
-            toolCard1Rival.SetToolTip(carta1Contrario, "Soy la carta rival ");
+            spaceCardsImages = new List<PictureBox>();
+            spaceCardsImages.Add(carta1);
+            spaceCardsImages.Add(carta2);
+            spaceCardsImages.Add(carta3);
+            spaceCardsImages.Add(carta4);
+           // toolCard1Rival.SetToolTip(carta1Contrario, "Soy la carta rival ");
         }
-        private int[] ObtenerMazo() {
+       /* private int[] ObtenerMazo() {
             int[] cartasArray = { 2, 4, 1, 3 };
             var cartasList = cartasArray.ToList();
             Random random = new Random();
             var randomizedList = cartasList.OrderBy(x => random.Next()).ToList();
             randomizedList.CopyTo(cartasArray);
             return cartasArray;
-        }
-        private void IniciarCartaPC() {
+        }*/
+        /*private void IniciarCartaPC() {
             int[] cartas = ObtenerMazo();
             Random random=new Random();
             int carta = random.Next(0, 3);
             AsignarImagenesCartas(carta1Contrario, cartas[carta]);
            
+        }*/
+        private void InitCardPC()
+        {            
+            Random random = new Random();
+            int carta = random.Next(0, 3);
+            SetImageCard(carta1Contrario, rival.Mazo[carta].CardId);
+
         }
-        private void IniciarCartas() {
+        private void InitCardPlayer()
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                SetImageCard(spaceCardsImages[i], jugador.Mazo[i].CardId);
+            }
+        }
+        private void SetImageCard(PictureBox carta, int num) {
+            carta.Image = Image.FromFile(string.Format(@"images/{0}.jpeg", num));
+            carta.SizeMode = PictureBoxSizeMode.StretchImage;
+            carta.AllowDrop = true;
+        }
+        /*private void IniciarCartas() {
             int[] cartas = ObtenerMazo();
             AsignarImagenesCartas(carta1, cartas[0]);
             AsignarImagenesCartas(carta2, cartas[1]);
@@ -71,7 +83,7 @@ namespace CRoyale.Client
             carta.SizeMode = PictureBoxSizeMode.StretchImage;
             carta.AllowDrop = true;
            // toolTip1.SetToolTip(carta, "Soy la carta "+num);
-        }
+        }*/
 		private void TestCard() {
             Card player1 = new Card();
             player1.Name = "Golem";
@@ -122,8 +134,10 @@ namespace CRoyale.Client
 		private void Form1_Load(object sender, EventArgs e)
 		{
             //TestCard();
-            IniciarCartas();
-            IniciarCartaPC();
+            //IniciarCartas();
+           // IniciarCartaPC();
+           InitCardPC();
+            InitCardPlayer();
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)

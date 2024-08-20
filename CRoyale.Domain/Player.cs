@@ -9,7 +9,7 @@ namespace CRoyale.Domain
     public class Player
     {
         public string Name { get; set; }
-        public List<Card> Maso { get; set; }
+        public List<Card> Mazo { get; set; }
 
     }
 }
