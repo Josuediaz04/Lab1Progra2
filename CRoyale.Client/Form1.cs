@@ -63,6 +63,7 @@ namespace CRoyale.Client
                 if (controlPlay.ValidateHP(cardRival.HP))
                 {
                     UpdateCardPC();
+                    cardRival = keyCardImage[card1Rival.Name];
                 }
                 if (controlPlay.ValidateHP(cardAtack.HP))
                     control.Visible = false;
