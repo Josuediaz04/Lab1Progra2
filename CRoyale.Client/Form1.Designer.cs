@@ -28,20 +28,18 @@
 		/// </summary>
 		private void InitializeComponent()
 		{
-            this.components = new System.ComponentModel.Container();
             System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.btnCerrar = new System.Windows.Forms.Button();
-            this.carta1 = new System.Windows.Forms.PictureBox();
-            this.carta2 = new System.Windows.Forms.PictureBox();
-            this.carta3 = new System.Windows.Forms.PictureBox();
-            this.carta4 = new System.Windows.Forms.PictureBox();
-            this.carta1Contrario = new System.Windows.Forms.PictureBox();
-            this.toolCard1Rival = new System.Windows.Forms.ToolTip(this.components);
-            ((System.ComponentModel.ISupportInitialize)(this.carta1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carta2)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carta3)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carta4)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carta1Contrario)).BeginInit();
+            this.card1 = new System.Windows.Forms.PictureBox();
+            this.card2 = new System.Windows.Forms.PictureBox();
+            this.card3 = new System.Windows.Forms.PictureBox();
+            this.card4 = new System.Windows.Forms.PictureBox();
+            this.card1Rival = new System.Windows.Forms.PictureBox();
+            ((System.ComponentModel.ISupportInitialize)(this.card1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.card2)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.card3)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.card4)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.card1Rival)).BeginInit();
             this.SuspendLayout();
             // 
             // btnCerrar
@@ -56,59 +54,51 @@
             this.btnCerrar.UseVisualStyleBackColor = false;
             this.btnCerrar.Click += new System.EventHandler(this.btnCerrar_Click);
             // 
-            // carta1
+            // card1
             // 
-            this.carta1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.carta1.Location = new System.Drawing.Point(172, 526);
-            this.carta1.Name = "carta1";
-            this.carta1.Size = new System.Drawing.Size(75, 77);
-            this.carta1.TabIndex = 1;
-            this.carta1.TabStop = false;
-            this.carta1.MouseDown += new System.Windows.Forms.MouseEventHandler(this.carta1_MouseDown);
-            this.carta1.MouseMove += new System.Windows.Forms.MouseEventHandler(this.carta1_MouseMove);
+            this.card1.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.card1.Location = new System.Drawing.Point(172, 526);
+            this.card1.Name = "card1";
+            this.card1.Size = new System.Drawing.Size(75, 77);
+            this.card1.TabIndex = 1;
+            this.card1.TabStop = false;
             // 
-            // carta2
+            // card2
             // 
-            this.carta2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.carta2.Location = new System.Drawing.Point(253, 526);
-            this.carta2.Name = "carta2";
-            this.carta2.Size = new System.Drawing.Size(75, 77);
-            this.carta2.TabIndex = 2;
-            this.carta2.TabStop = false;
-            this.carta2.MouseDown += new System.Windows.Forms.MouseEventHandler(this.carta2_MouseDown);
-            this.carta2.MouseMove += new System.Windows.Forms.MouseEventHandler(this.carta2_MouseMove);
+            this.card2.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.card2.Location = new System.Drawing.Point(253, 526);
+            this.card2.Name = "card2";
+            this.card2.Size = new System.Drawing.Size(75, 77);
+            this.card2.TabIndex = 2;
+            this.card2.TabStop = false;
             // 
-            // carta3
+            // card3
             // 
-            this.carta3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.carta3.Location = new System.Drawing.Point(334, 526);
-            this.carta3.Name = "carta3";
-            this.carta3.Size = new System.Drawing.Size(75, 77);
-            this.carta3.TabIndex = 3;
-            this.carta3.TabStop = false;
-            this.carta3.MouseDown += new System.Windows.Forms.MouseEventHandler(this.carta3_MouseDown);
-            this.carta3.MouseMove += new System.Windows.Forms.MouseEventHandler(this.carta3_MouseMove);
+            this.card3.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.card3.Location = new System.Drawing.Point(334, 526);
+            this.card3.Name = "card3";
+            this.card3.Size = new System.Drawing.Size(75, 77);
+            this.card3.TabIndex = 3;
+            this.card3.TabStop = false;
             // 
-            // carta4
+            // card4
             // 
-            this.carta4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.carta4.Location = new System.Drawing.Point(424, 526);
-            this.carta4.Name = "carta4";
-            this.carta4.Size = new System.Drawing.Size(75, 77);
-            this.carta4.TabIndex = 4;
-            this.carta4.TabStop = false;
-            this.carta4.MouseDown += new System.Windows.Forms.MouseEventHandler(this.carta4_MouseDown);
-            this.carta4.MouseMove += new System.Windows.Forms.MouseEventHandler(this.carta4_MouseMove);
+            this.card4.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.card4.Location = new System.Drawing.Point(424, 526);
+            this.card4.Name = "card4";
+            this.card4.Size = new System.Drawing.Size(75, 77);
+            this.card4.TabIndex = 4;
+            this.card4.TabStop = false;
             // 
-            // carta1Contrario
+            // card1Rival
             // 
-            this.carta1Contrario.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
-            this.carta1Contrario.Location = new System.Drawing.Point(253, 140);
-            this.carta1Contrario.Name = "carta1Contrario";
-            this.carta1Contrario.Size = new System.Drawing.Size(75, 77);
-            this.carta1Contrario.TabIndex = 5;
-            this.carta1Contrario.TabStop = false;
-            this.carta1Contrario.Click += new System.EventHandler(this.carta1Contrario_Click);
+            this.card1Rival.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
+            this.card1Rival.Location = new System.Drawing.Point(253, 140);
+            this.card1Rival.Name = "card1Rival";
+            this.card1Rival.Size = new System.Drawing.Size(75, 77);
+            this.card1Rival.TabIndex = 5;
+            this.card1Rival.TabStop = false;
+            this.card1Rival.Click += new System.EventHandler(this.carta1Contrario_Click);
             // 
             // Form1
             // 
@@ -117,21 +107,21 @@
             this.BackgroundImage = ((System.Drawing.Image)(resources.GetObject("$this.BackgroundImage")));
             this.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.ClientSize = new System.Drawing.Size(586, 635);
-            this.Controls.Add(this.carta1Contrario);
-            this.Controls.Add(this.carta4);
-            this.Controls.Add(this.carta3);
-            this.Controls.Add(this.carta2);
-            this.Controls.Add(this.carta1);
+            this.Controls.Add(this.card1Rival);
+            this.Controls.Add(this.card4);
+            this.Controls.Add(this.card3);
+            this.Controls.Add(this.card2);
+            this.Controls.Add(this.card1);
             this.Controls.Add(this.btnCerrar);
-            this.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.Margin = new System.Windows.Forms.Padding(2);
             this.Name = "Form1";
             this.Text = "Form1";
             this.Load += new System.EventHandler(this.Form1_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.carta1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carta2)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carta3)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carta4)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.carta1Contrario)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.card1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.card2)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.card3)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.card4)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.card1Rival)).EndInit();
             this.ResumeLayout(false);
 
 		}
@@ -139,12 +129,11 @@
         #endregion
 
         private System.Windows.Forms.Button btnCerrar;
-        private System.Windows.Forms.PictureBox carta1;
-        private System.Windows.Forms.PictureBox carta2;
-        private System.Windows.Forms.PictureBox carta3;
-        private System.Windows.Forms.PictureBox carta4;
-        private System.Windows.Forms.PictureBox carta1Contrario;
-        private System.Windows.Forms.ToolTip toolCard1Rival;
+        private System.Windows.Forms.PictureBox card1;
+        private System.Windows.Forms.PictureBox card2;
+        private System.Windows.Forms.PictureBox card3;
+        private System.Windows.Forms.PictureBox card4;
+        private System.Windows.Forms.PictureBox card1Rival;
     }
 }
 

@@ -4,10 +4,12 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using CRoyale.Domain;
+using static System.Net.Mime.MediaTypeNames;
 using static System.Windows.Forms.VisualStyles.VisualStyleElement.TextBox;
 
 namespace CRoyale.Client
@@ -19,71 +21,123 @@ namespace CRoyale.Client
         private Player rival;
         private ControlPlay controlPlay;
         private List<PictureBox> spaceCardsImages;
+        private Dictionary<string, Card> keyCardImage;
+        private ToolTip toolTip;
+        private Control cardImageAtaque;       
+
         public Form1()
 		{
 			InitializeComponent();
             this.FormBorderStyle = FormBorderStyle.None;
             this.StartPosition = FormStartPosition.CenterScreen;
             controlPlay = new ControlPlay();
+            keyCardImage = new Dictionary<string, Card>();
             jugador = controlPlay.GetPlayer("Juan");
             rival = controlPlay.GetPlayer("Marco");  
             controlPlay.MoveCards(jugador);
             controlPlay.MoveCards(rival);
 
             spaceCardsImages = new List<PictureBox>();
-            spaceCardsImages.Add(carta1);
-            spaceCardsImages.Add(carta2);
-            spaceCardsImages.Add(carta3);
-            spaceCardsImages.Add(carta4);
-           // toolCard1Rival.SetToolTip(carta1Contrario, "Soy la carta rival ");
+            spaceCardsImages.Add(card1);
+            spaceCardsImages.Add(card2);
+            spaceCardsImages.Add(card3);
+            spaceCardsImages.Add(card4);
+            InitEventsCard();
+            toolTip = new ToolTip();
+            toolTip.AutoPopDelay = 5000;
+            toolTip.InitialDelay = 1000;
+            toolTip.ReshowDelay = 500;
+            cardImageAtaque = null;           
+        }              
+
+        private void card_DoubleClick(object sender, EventArgs e)
+        {            
+            Control control = sender as Control;
+            if (cardImageAtaque == control)
+            {
+               // MessageBox.Show("ataco la carta:" + control.Name);
+                Card cardAtack = keyCardImage[control.Name];
+                Card cardRival=keyCardImage[card1Rival.Name];
+                controlPlay.Attack(cardRival.Damage, cardAtack);
+                controlPlay.Attack(cardAtack.Damage, cardRival);
+                if (controlPlay.ValidateHP(cardRival.HP))
+                {
+                    UpdateCardPC();
+                }
+                if (controlPlay.ValidateHP(cardAtack.HP))
+                    control.Visible = false;
+                SetToolTipo(control, cardAtack);
+                SetToolTipo(card1Rival, cardRival);
+            }
+            
         }
-       /* private int[] ObtenerMazo() {
-            int[] cartasArray = { 2, 4, 1, 3 };
-            var cartasList = cartasArray.ToList();
+        private void InitEventsCard() {
+            foreach(var item in spaceCardsImages)
+            {
+                item.MouseDown += card_MouseDown;
+                item.MouseMove += card_MouseMove;
+                item.DoubleClick += card_DoubleClick;
+            }
+        }
+        private void card_MouseDown(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                offset = new Point(e.X, e.Y);
+            }
+        }
+
+        private void card_MouseMove(object sender, MouseEventArgs e)
+        {
+            if (e.Button == MouseButtons.Left)
+            {
+                Control control = sender as Control; // Obtener el control que llama al evento
+                if (control != null)
+                {
+                    Point newLocation = this.PointToClient(Control.MousePosition);
+                    newLocation.Offset(-offset.X, -offset.Y);
+                    control.Location = newLocation;
+                    cardImageAtaque = control;
+                }
+            }
+        }
+        private void UpdateCardPC() {
             Random random = new Random();
-            var randomizedList = cartasList.OrderBy(x => random.Next()).ToList();
-            randomizedList.CopyTo(cartasArray);
-            return cartasArray;
-        }*/
-        /*private void IniciarCartaPC() {
-            int[] cartas = ObtenerMazo();
-            Random random=new Random();
-            int carta = random.Next(0, 3);
-            AsignarImagenesCartas(carta1Contrario, cartas[carta]);
-           
-        }*/
+            int index = random.Next(0, 3);
+            SetImageCard(card1Rival, rival.Mazo[index].CardId);
+            SetToolTipo(card1Rival, rival.Mazo[index]);
+            keyCardImage[card1Rival.Name]= rival.Mazo[index];
+        }
         private void InitCardPC()
         {            
             Random random = new Random();
-            int carta = random.Next(0, 3);
-            SetImageCard(carta1Contrario, rival.Mazo[carta].CardId);
-
+            int index = random.Next(0, 3);
+            SetImageCard(card1Rival, rival.Mazo[index].CardId);
+            SetToolTipo(card1Rival, rival.Mazo[index]);
+            keyCardImage.Add(card1Rival.Name, rival.Mazo[index]);
+            card1Rival.DoubleClick += card_DoubleClick;
+        }
+        private void SetToolTipo(Control pictureBox, Card card) {
+            string msg = String.Format("Name: {0} , HP: {1} \n Damage: {2} ,  Shield: {3} \n Level:{4}", 
+                card.Name,card.HP,card.Damage, card.Shield,card.Level);
+            toolTip.SetToolTip(pictureBox, msg);
         }
         private void InitCardPlayer()
         {
             for (int i = 0; i < 4; i++)
             {
-                SetImageCard(spaceCardsImages[i], jugador.Mazo[i].CardId);
+                PictureBox image = spaceCardsImages[i];
+                Card card = jugador.Mazo[i];
+                SetImageCard(image, card.CardId);
+                keyCardImage.Add(image.Name, card);
+                SetToolTipo(image, card);               
             }
         }
         private void SetImageCard(PictureBox carta, int num) {
-            carta.Image = Image.FromFile(string.Format(@"images/{0}.jpeg", num));
+            carta.Image = System.Drawing.Image.FromFile(string.Format(@"images/{0}.jpeg", num));
             carta.SizeMode = PictureBoxSizeMode.StretchImage;
             carta.AllowDrop = true;
-        }
-        /*private void IniciarCartas() {
-            int[] cartas = ObtenerMazo();
-            AsignarImagenesCartas(carta1, cartas[0]);
-            AsignarImagenesCartas(carta2, cartas[1]);
-            AsignarImagenesCartas(carta3, cartas[2]);
-            AsignarImagenesCartas(carta4, cartas[3]);
-        }
-        private void AsignarImagenesCartas(PictureBox carta, int num) {
-            carta.Image = Image.FromFile(string.Format(@"images/{0}.jpeg", num));
-            carta.SizeMode = PictureBoxSizeMode.StretchImage;
-            carta.AllowDrop = true;
-           // toolTip1.SetToolTip(carta, "Soy la carta "+num);
-        }*/
+        }       
 		private void TestCard() {
             Card player1 = new Card();
             player1.Name = "Golem";
@@ -132,12 +186,9 @@ namespace CRoyale.Client
 
         }
 		private void Form1_Load(object sender, EventArgs e)
-		{
-            //TestCard();
-            //IniciarCartas();
-           // IniciarCartaPC();
+		{       
            InitCardPC();
-            InitCardPlayer();
+           InitCardPlayer();
         }
 
         private void btnCerrar_Click(object sender, EventArgs e)
@@ -145,82 +196,13 @@ namespace CRoyale.Client
             this.Close();
         }
 
-        private void carta1_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                offset = new Point(e.X, e.Y);
-            }
-        }
-
-        private void carta1_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Point newLocation = this.PointToClient(Control.MousePosition);
-                newLocation.Offset(-offset.X, -offset.Y);
-                carta1.Location = newLocation;
-            }
-        }
-
-        private void carta2_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                offset = new Point(e.X, e.Y);
-            }
-        }
-
-        private void carta2_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Point newLocation = this.PointToClient(Control.MousePosition);
-                newLocation.Offset(-offset.X, -offset.Y);
-                carta2.Location = newLocation;
-            }
-        }
-
-        private void carta3_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                offset = new Point(e.X, e.Y);
-            }
-        }
-
-        private void carta3_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Point newLocation = this.PointToClient(Control.MousePosition);
-                newLocation.Offset(-offset.X, -offset.Y);
-                carta3.Location = newLocation;
-            }
-        }
-
-        private void carta4_MouseDown(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                offset = new Point(e.X, e.Y);
-            }
-        }
-
-        private void carta4_MouseMove(object sender, MouseEventArgs e)
-        {
-            if (e.Button == MouseButtons.Left)
-            {
-                Point newLocation = this.PointToClient(Control.MousePosition);
-                newLocation.Offset(-offset.X, -offset.Y);
-                carta4.Location = newLocation;
-            }
-        }
+       
         int ataque = 0;
         private void carta1Contrario_Click(object sender, EventArgs e)
         {
             ataque++;
-            toolCard1Rival.SetToolTip(carta1Contrario, "Estoy en el ataque numero "+ ataque);
+            toolTip.SetToolTip(card1Rival, "update");
+            //toolCard1.SetToolTip(carta1Contrario, "Estoy en el ataque numero "+ ataque);
         }
     }
 }
