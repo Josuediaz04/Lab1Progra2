@@ -25,16 +25,22 @@ namespace CRoyale.Client
             jugador = new Player();
             jugador.Name = "Juan";
             jugador.Maso = new List<Card> {
-             new Card{ CardId=1,Name="", HP=20, Damage=3  },
-              new Card{ CardId=2,Name="", HP=20, Damage=3  }
+             new Card{ CardId=1,Name="Bruja", HP=20, Damage=3  },
+              new Card{ CardId=2,Name="Pekka", HP=20, Damage=3  },
+              new Card{ CardId=3,Name="Verdugo", HP=20, Damage=4},
+              new Card{ CardId=4,Name="Mago", HP = 20, Damage=3}
             };
+
+            
 
             rival = new Player();
             rival.Name = "Marco";
             rival.Maso = new List<Card> {
-             new Card{ CardId=1,Name="", HP=20, Damage=3  },
-              new Card{ CardId=2,Name="", HP=20, Damage=3  }
-            };
+             new Card{ CardId=1,Name="Bruja", HP=20, Damage=3  },
+              new Card{ CardId=2,Name="Pekka", HP=20, Damage=3  },
+			  new Card{ CardId=3,Name="Verdugo", HP=20, Damage=4},
+			  new Card{ CardId=4,Name="Mago", HP = 20, Damage=3}
+			};
 
             toolCard1Rival.SetToolTip(carta1Contrario, "Soy la carta rival ");
         }
@@ -200,7 +206,7 @@ namespace CRoyale.Client
         private void carta1Contrario_Click(object sender, EventArgs e)
         {
             ataque++;
-            toolCard1Rival.SetToolTip(carta1Contrario, "Estoy en el ataque numero "+ataque);
+            toolCard1Rival.SetToolTip(carta1Contrario, "Estoy en el ataque numero "+ ataque);
         }
     }
 }
