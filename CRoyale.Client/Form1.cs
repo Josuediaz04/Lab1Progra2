@@ -102,12 +102,18 @@ namespace CRoyale.Client
                 }
             }
         }
-        private void UpdateCardPC() {
+        private void UpdateCardPC() {            
             Random random = new Random();
             int index = random.Next(0, 3);
-            SetImageCard(card1Rival, rival.Mazo[index].CardId);
-            SetToolTipo(card1Rival, rival.Mazo[index]);
-            keyCardImage[card1Rival.Name]= rival.Mazo[index];
+            Card cardRival = rival.Mazo[index];
+            if (controlPlay.ValidateHP(cardRival.HP))
+            {
+                int levelActual = cardRival.Level + 1;
+                cardRival.ScaleLevel(levelActual);
+            }
+            SetImageCard(card1Rival, cardRival.CardId);
+            SetToolTipo(card1Rival, cardRival);
+            keyCardImage[card1Rival.Name]= cardRival;
         }
         private void InitCardPC()
         {            

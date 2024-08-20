@@ -37,12 +37,16 @@ namespace CRoyale.Domain
 			Player player = new Player();
 			player.Name = name;
 			player.Mazo = new List<Card> {
-			 new Card{ CardId=1,Name="Bruja", HP=20, Damage=3  },
-			  new Card{ CardId=2,Name="Pekka", HP=20, Damage=3  },
-			  new Card{ CardId=3,Name="Verdugo", HP=20, Damage=4},
-			  new Card{ CardId=4,Name="Mago", HP = 20, Damage=3}
+			 new Card{ CardId=1,Name="Bruja", HPBase=rnd.Next(1, 20), Damage=rnd.Next(1, 11) },
+			  new Card{ CardId=2,Name="Pekka", HPBase=rnd.Next(1, 15), Damage=rnd.Next(1, 9)  },
+			  new Card{ CardId=3,Name="Verdugo", HPBase=rnd.Next(1, 17), Damage=rnd.Next(1, 8)},
+			  new Card{ CardId=4,Name="Mago", HPBase = rnd.Next(1, 10), Damage=rnd.Next(1, 7)}
 			};
+			foreach (Card card in player.Mazo) {
+                int level = rnd.Next(1, 5);
+				card.ScaleLevel(level);
 
+            }
 			return player;
 		}
 	}
